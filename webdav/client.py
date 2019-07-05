@@ -172,7 +172,7 @@ class Client(object):
 
         if self.webdav.verbose:
             self.default_options['VERBOSE'] = self.webdav.verbose
-        
+
         if self.default_options:
             add_options(curl, self.default_options)
 
@@ -296,7 +296,7 @@ class Client(object):
 
             if int(code) == 200:
                 return True
-        
+
             return False
 
         except pycurl.error:
@@ -878,7 +878,7 @@ class Client(object):
 
             response_str = response.getvalue()
             tree = etree.fromstring(response_str)
-            xpath = "{xpath_prefix}{xpath_exp}".format(xpath_prefix=".//", xpath_exp=option['name'])
+            xpath = "{xpath_prefix}{xpath_exp}".format(xpath_prefix=".//{{{ns}}}".format(ns=option.get('namespace', '')), xpath_exp=option['name'])
             return tree.findtext(xpath)
 
         def data(option):
